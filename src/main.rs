@@ -1,11 +1,12 @@
-use rustc_hash::FxHashMap;
+use hashbrown::HashMap;
+use rustc_hash::FxBuildHasher;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
 fn main() {
     let f = File::open("fileseq.txt").expect("open");
     let reader = BufReader::new(f);
-    let mut m: FxHashMap<u64, ()> = FxHashMap::default();
+    let mut m: HashMap<u64, (), FxBuildHasher> = HashMap::default();
     let (mut ins_count, mut rm_count) = (0u64, 0u64);
     for line in reader.lines() {
         let line = line.unwrap();
